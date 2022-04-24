@@ -1,0 +1,9 @@
+---
+- name: Create a login user
+  user:
+    name: rag
+    password: A9AF7B36828A9B8E7EAB50EFA85D49C1
+    groups:
+      - wheel
+    state: present
+---
