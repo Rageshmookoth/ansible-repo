@@ -19,5 +19,4 @@
         dest: /var/www/html/index.html
         content: |
           this is Ragesh's test page
-EOF
 
