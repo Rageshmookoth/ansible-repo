@@ -13,7 +13,6 @@
        comment: "Privileged User"
        uid: 2001
        group: nixadmins
-       groups: office,warehouse
        append: yes
        shell: /bin/bash
        generate_ssh_key: yes
