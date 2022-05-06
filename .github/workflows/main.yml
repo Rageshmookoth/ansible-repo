@@ -8,31 +8,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  integration-tests:
+  vm:
     runs-on: ubuntu-latest
-
-    services:
-      selenium:
-        image: selenium/standalone-chrome:latest
-        ports: 
-          - 4444:4444
-        options: --shm-size="2g"
-
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Get IP Address
-      run: echo "##[set-output name=ip;]$(ifconfig eth0 | grep 'inet [0-9\.]* ' -o | sed 's/[^0-9\.]//g')"
-      id: ip_addr 
-      
-    - name: Setup Pyhon
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
-        
-    - name: Install Python dependencies
-      uses: py-actions/py-dependency-install@v2
-      with: /path/to/requirements
+      - run: |
+          echo This job does not specify a container.
+          echo It runs directly on the virtual machine.
+        name: Run on VM
+  container:
+    runs-on: ubuntu-latest
+    container: node:10.16-jessie
+    steps:
+      - run: |
+          echo This job does specify a container.
+          echo It runs in the container instead of the VM.
+        name: Run in container
 
-    - name: Run Tests
-      run: python3 main.py --backend http://localhost:8080/ --frontend http://${{ steps.ip_addr.outputs.ip }}:4200 --selenium http://localhost:4444/wd/hub
+
+    
