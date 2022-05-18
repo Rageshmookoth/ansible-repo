@@ -1,0 +1,35 @@
+name: Github runner checks
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+
+jobs:
+  runner-check:
+    runs-on: ubuntu-latest
+    steps:
+        - name : checking runner health status
+          run: cd /opt/runner
+          run: 
+        - name: Notify slack success
+          if: success()
+          env:
+            slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
+          uses: matching/github-action-slack-notify-build@v1
+          with:
+            channel: matching-voyager-datadog-alerts
+            status: SUCCESS
+            color: good
+
+        - name: Notify slack fail
+          if: failure()
+          env:
+          
+            slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
+          uses: matching/github-action-slack-notify-build@v1
+          with:
+            channel: matching-voyager-datadog-alerts
+            status: FAILED
+            color: danger
+            notification_title: '{workflow} has {status_message}'
+            message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}>'
+            footer: 'Linked to Repo <{repo_url}|{repo}>'
