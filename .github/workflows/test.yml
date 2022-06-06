@@ -1,5 +1,4 @@
-name: Github runner checks
-
+name: test
 on:
   workflow_dispatch:
     
