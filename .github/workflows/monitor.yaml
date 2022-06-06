@@ -1,7 +1,16 @@
 name: Github runner checks
+
 on:
-  schedule:
-    - cron: "*/5 * * * *"
+  workflow_dispatch:
+    inputs:
+      choice:
+        type: choice
+        description: Select the environment
+        options:
+        - Prod
+        - QA
+        - Stage
+
 
 jobs:
   runner-check:
