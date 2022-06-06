@@ -1,0 +1,24 @@
+name: Github runner checks
+
+on:
+  workflow_dispatch:
+    
+
+jobs:
+  runner-check:
+    runs-on: ubuntu-latest
+    steps:
+        - name : checking runner health status
+          run: cd /opt/runner
+          run: 
+        - name: Notify slack success
+          if: success()
+          env:
+            slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
+          uses: matching/github-action-slack-notify-build@v1
+          with:
+            channel: matching-voyager-datadog-alerts
+            status: SUCCESS
+            color: good
+
+        
